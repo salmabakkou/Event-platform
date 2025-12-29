@@ -5,15 +5,23 @@ function App() {
   return (
     <Router>
       <Routes>
+        
+      
+          <Route path="/admin/addEvent" element={<AddEvent />} />
+          {/* <Route path="eventList" element={<EventList />} /> */}
+          {/* <Route path="dashboard" element={<Dashboard />} /> */}
+          {/* <Route path="orders" element={<Orders />} /> */}
+      
 
-        <Route path="/admin/add-event" element={<AddEvent />} />
-
-        {/*
+    
+          {/* <Route path="/events" element={<Events />} />   */}
+          {/*
         <Route path="/" element={<Home />} />
-        <Route path="/events" element={<Events />} />
+        
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/contact" element={<Contact />} />
         */}
+        
       </Routes>
     </Router>
   );
