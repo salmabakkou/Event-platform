@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddEvent from "./pages/admin/AddEvent";
 import EventList from "./pages/admin/EventsList";
 import AdminLayout from "./layouts/AdminLayout";
+import Events from "./pages/user/Events";
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
           {/* <Route path="orders" element={<Orders />} /> */}
         </Route>
         {/* <Route element={<UserLayout />}> */}
-          {/* <Route path="/events" element={<Events />} />   */}
+          <Route path="/events" element={<Events />} />  
           {/* <Route path="/" element={<Home />} /> */}
         {/* </Route>        */}
       </Routes>
