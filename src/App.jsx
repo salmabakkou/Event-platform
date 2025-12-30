@@ -1,8 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AdminLayout from "./layouts/AdminLayout";
 import AddEvent from "./pages/admin/AddEvent";
 import EventList from "./pages/admin/EventsList";
-import AdminLayout from "./layouts/AdminLayout";
+import UserLayout from "./layouts/UserLayout";
+import Home from "./pages/user/Home";
 import Events from "./pages/user/Events";
+import Contact from "./pages/user/Contact";
+
 
 
 function App() {
@@ -15,10 +19,11 @@ function App() {
           {/* <Route path="dashboard" element={<Dashboard />} /> */}
           {/* <Route path="orders" element={<Orders />} /> */}
         </Route>
-        {/* <Route element={<UserLayout />}> */}
-          <Route path="/events" element={<Events />} />  
-          {/* <Route path="/" element={<Home />} /> */}
-        {/* </Route>        */}
+        <Route element={<UserLayout />}>
+          <Route path="/" element={<Home />} />         
+          <Route path="/events" element={<Events />} /> 
+          <Route path="/contact" element={<Contact />} /> 
+        </Route>
       </Routes>
     </Router>
   );
