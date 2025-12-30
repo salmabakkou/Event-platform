@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddEvent from "./pages/admin/AddEvent";
+import EventList from "./pages/admin/EventsList";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
         
       
           <Route path="/admin/addEvent" element={<AddEvent />} />
-          {/* <Route path="eventList" element={<EventList />} /> */}
+          <Route path="/admin/eventList" element={<EventList />} />
           {/* <Route path="dashboard" element={<Dashboard />} /> */}
           {/* <Route path="orders" element={<Orders />} /> */}
       

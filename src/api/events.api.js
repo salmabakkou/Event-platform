@@ -30,4 +30,33 @@ export const addEvent = async (formData) => {
   const res = await api.post("/events", event);
   return res.data;
 };
+// -------------------- GET EVENTS --------------------
+export const getEvents = () => api.get("/events");
+
+// -------------------- DELETE EVENT --------------------
+export const deleteEvent = (id) => api.delete(`/events/${id}`);
+
+// -------------------- UPDATE EVENT --------------------
+export const updateEvent = async (id, updatedData) => {
+  let imageUrl = updatedData.image;
+
+  // upload image seulement si elle est modifiée
+  if (updatedData.image instanceof File) {
+    const data = new FormData();
+    data.append("file", updatedData.image);
+    data.append("upload_preset", UPLOAD_PRESET);
+
+    const cloudinaryRes = await axios.post(CLOUDINARY_URL, data);
+    imageUrl = cloudinaryRes.data.secure_url;
+  }
+
+  const event = {
+    ...updatedData,
+    price: Number(updatedData.price),
+    image: imageUrl,
+  };
+
+  const res = await api.put(`/events/${id}`, event);
+  return res.data;
+};
 
