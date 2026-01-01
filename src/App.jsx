@@ -7,8 +7,6 @@ import Home from "./pages/user/Home";
 import Events from "./pages/user/Events";
 import Contact from "./pages/user/Contact";
 
-
-
 function App() {
   return (
     <Router>
