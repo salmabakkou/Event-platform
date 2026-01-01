@@ -1,44 +1,78 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { X, ShoppingCart, Plus, Minus, Trash2, CreditCard } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { X, ShoppingCart, Plus, Minus, Trash2, CreditCard, Ticket } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { addToCart, removeFromCart, deleteFromCart, toggleCart, clearCart } from '../../redux/slices/cartSlice';
+import { 
+  addToCart, 
+  removeFromCart, 
+  deleteFromCart, 
+  toggleCart, 
+  clearCart 
+} from '../../redux/slices/cartSlice';
 
 export default function CartSidebar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { items, totalQuantity, totalPrice, isCartOpen } = useSelector((state) => state.cart);
+
+  const goToCheckout = () => {
+    dispatch(toggleCart());
+    navigate('/checkout');
+  };
 
   return (
     <AnimatePresence>
       {isCartOpen && (
         <>
           <motion.div 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
             onClick={() => dispatch(toggleCart())}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
           />
           
           <motion.div 
-            initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+            initial={{ x: '100%' }} 
+            animate={{ x: 0 }} 
+            exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed top-0 right-0 h-full w-full sm:w-[380px] bg-white z-50 shadow-2xl flex flex-col"
+            className="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-50 shadow-xl flex flex-col"
           >
-            {/* Header  */}
-            <div className="px-6 py-5 border-b flex items-center justify-between">
-              <h2 className="text-lg font-bold text-gray-900">Your Selection ({totalQuantity})</h2>
-              <button onClick={() => dispatch(toggleCart())} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <X size={20} className="text-gray-500" />
-              </button>
+            {/* Header */}
+            <div className="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-[#0b3d2e] to-[#0a3528]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                    <Ticket size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-white">Your Tickets</h2>
+                    <p className="text-xs text-white/80">{totalQuantity} {totalQuantity === 1 ? 'item' : 'items'}</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => dispatch(toggleCart())}
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center"
+                >
+                  <X size={18} className="text-white" />
+                </button>
+              </div>
             </div>
 
-            {/* List - Product  */}
-            <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
+            {/* Cart Items */}
+            <div className="flex-1 overflow-y-auto p-4">
               {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-gray-400">
-                  <p className="text-sm">Your cart is currently empty.</p>
+                <div className="h-full flex flex-col items-center justify-center text-gray-400 py-12">
+                  <ShoppingCart size={56} className="mb-4 opacity-20" />
+                  <p className="text-lg font-medium text-gray-300 mb-2">Your cart is empty</p>
+                  <p className="text-sm text-gray-400 text-center max-w-xs">
+                    Browse events and add tickets to get started
+                  </p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {items.map((item) => (
                     <CartItem key={item.id} item={item} dispatch={dispatch} />
                   ))}
@@ -46,24 +80,37 @@ export default function CartSidebar() {
               )}
             </div>
 
-            {/* Footer - Minimalist Price & Strong CTA */}
+            {/* Footer */}
             {items.length > 0 && (
-              <div className="p-6 border-t bg-gray-50">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-gray-500 font-medium text-sm uppercase tracking-wider">Subtotal</span>
-                  <span className="text-xl font-bold text-gray-900">{totalPrice.toFixed(2)} MAD</span>
+              <div className="p-6 border-t border-gray-100 bg-white">
+                {/* Total */}
+                <div className="flex justify-between items-center mb-6 p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Amount</span>
+                    <p className="text-xs text-gray-400 mt-1">All taxes included</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-2xl font-bold text-[#0b3d2e]">{totalPrice.toFixed(2)} MAD</span>
+                    <p className="text-xs text-gray-500 mt-1">Free shipping</p>
+                  </div>
                 </div>
                 
-                <button className="w-full py-4 bg-[#0B3D2E] text-white font-bold rounded-lg shadow-lg hover:bg-[#082d22] transition-all flex items-center justify-center gap-3 mb-3">
-                  <CreditCard size={18} />
+                {/* Checkout Button */}
+                <button 
+                  onClick={goToCheckout}
+                  className="w-full py-4 bg-gradient-to-r from-[#8b1e1e] to-[#7a1a1a] text-white font-bold text-lg rounded-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-3 mb-4 shadow-md"
+                >
+                  <CreditCard size={20} />
                   Checkout Now
                 </button>
                 
+                {/* Clear Cart */}
                 <button 
                   onClick={() => dispatch(clearCart())}
-                  className="w-full text-xs text-gray-400 hover:text-red-500 transition-colors uppercase tracking-widest font-semibold"
+                  className="w-full text-sm text-gray-500 hover:text-[#8b1e1e] transition-colors font-medium flex items-center justify-center gap-2"
                 >
-                  Clear My Selection
+                  <Trash2 size={16} />
+                  Clear All Tickets
                 </button>
               </div>
             )}
@@ -76,34 +123,65 @@ export default function CartSidebar() {
 
 function CartItem({ item, dispatch }) {
   return (
-    <div className="flex gap-4 items-center">
-      {/* Image mise en valeur */}
-      <div className="relative group">
-        <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-lg border border-gray-100 shadow-sm" />
+    <motion.div 
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      className="flex gap-4 items-center p-4 bg-white border border-gray-100 rounded-xl hover:shadow-sm transition-shadow"
+    >
+      {/* Image */}
+      <div className="relative">
+        <img 
+          src={item.image} 
+          alt={item.name} 
+          className="w-20 h-20 object-cover rounded-lg shadow-sm"
+        />
+        <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#8b1e1e] rounded-full flex items-center justify-center">
+          <span className="text-xs font-bold text-white">{item.quantity}</span>
+        </div>
       </div>
       
+      {/* Details */}
       <div className="flex-1 min-w-0">
-        <div className="flex justify-between items-start">
-          <h4 className="text-sm font-bold text-gray-800 truncate pr-2">{item.name}</h4>
-          <button onClick={() => dispatch(deleteFromCart(item.id))} className="text-gray-300 hover:text-red-500 transition-colors">
-            <Trash2 size={14} />
+        {/* Header */}
+        <div className="flex justify-between items-start mb-2">
+          <h4 className="text-sm font-bold text-gray-900 line-clamp-2">{item.name}</h4>
+          <button 
+            onClick={() => dispatch(deleteFromCart(item.id))}
+            className="text-gray-300 hover:text-[#8b1e1e] transition-colors ml-2"
+          >
+            <Trash2 size={16} />
           </button>
         </div>
         
-        {/* Prix unitaire */}
-        <p className="text-xs text-gray-500 mb-2">{item.price} MAD / unit</p>
+        {/* Price per unit */}
+        <p className="text-xs text-gray-500 mb-3">{item.price.toFixed(2)} MAD / ticket</p>
         
-        {/* Contrôles de quantité  */}
+        {/* Quantity controls and total */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center border border-gray-200 rounded-md">
-            <button onClick={() => dispatch(removeFromCart(item.id))} className="px-2 py-1 hover:bg-gray-50 text-gray-400"><Minus size={12} /></button>
-            <span className="px-2 text-xs font-bold text-gray-700">{item.quantity}</span>
-            <button onClick={() => dispatch(addToCart(item))} className="px-2 py-1 hover:bg-gray-50 text-gray-400"><Plus size={12} /></button>
+          {/* Quantity controls */}
+          <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+            <button 
+              onClick={() => dispatch(removeFromCart(item.id))}
+              className="w-8 h-8 flex items-center justify-center hover:bg-gray-50 text-gray-500 hover:text-[#8b1e1e] transition-colors"
+            >
+              <Minus size={14} />
+            </button>
+            <span className="w-8 text-center text-sm font-bold text-gray-800">{item.quantity}</span>
+            <button 
+              onClick={() => dispatch(addToCart(item))}
+              className="w-8 h-8 flex items-center justify-center hover:bg-gray-50 text-gray-500 hover:text-[#0b3d2e] transition-colors"
+            >
+              <Plus size={14} />
+            </button>
           </div>
-          {/* Prix total */}
-          <span className="text-sm font-bold text-[#0B3D2E]">{(item.price * item.quantity).toFixed(2)} MAD</span>
+          
+          {/* Item total */}
+          <span className="text-base font-bold text-[#0b3d2e]">
+            {(item.price * item.quantity).toFixed(2)} MAD
+          </span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -6,6 +6,7 @@ import UserLayout from "./layouts/UserLayout";
 import Home from "./pages/user/Home";
 import Events from "./pages/user/Events";
 import Contact from "./pages/user/Contact";
+import Checkout from "./pages/user/Checkout";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />         
           <Route path="/events" element={<Events />} /> 
           <Route path="/contact" element={<Contact />} /> 
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </Router>
