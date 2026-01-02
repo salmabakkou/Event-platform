@@ -109,8 +109,8 @@ export default function Dashboard() {
         
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-          <p className="text-gray-600">Overview of your platform</p>
+          <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Dashboard</h1>
+          <p className="text-gray-600 text-center">Overview of your platform</p>
         </div>
 
         {/* Stats Cards - Style luxe */}

@@ -83,8 +83,8 @@ export default function Orders() {
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Orders</h1>
-              <p className="text-gray-600 mt-1">{orders.length} total orders</p>
+              <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-900">Orders</h1>
+              <p className="text-gray-600 text-center mt-1">{orders.length} total orders</p>
             </div>
             <button
               onClick={fetchOrders}

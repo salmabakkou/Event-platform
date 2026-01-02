@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 import {
   FiHome,
   FiCalendar,
@@ -15,42 +18,46 @@ export default function AdminSidebar({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isAuthenticated, role } = useSelector((state) => state.auth);
+
+  // Vérifier largeur écran
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      if (mobile) {
-        setOpen(false);
-      } else {
-        setOpen(true);
-      }
+      setOpen(!mobile);
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const baseLink =
     "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-[#0B3D2E]/5";
 
   const handleCloseOnMobile = () => {
-    if (isMobile) {
-      setMobileOpen(false);
-    }
+    if (isMobile) setMobileOpen(false);
   };
 
   const toggleSidebar = () => {
-    if (isMobile) {
-      setMobileOpen(!mobileOpen);
-    } else {
-      setOpen(!open);
-    }
+    if (isMobile) setMobileOpen(!mobileOpen);
+    else setOpen(!open);
   };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setMobileOpen(false);
+    navigate("/login"); // redirection vers login après logout
+  };
+
+  // Si l'utilisateur n'est pas admin, ne pas afficher la sidebar
+  if (!isAuthenticated || role !== "admin") return children;
 
   return (
     <div className="flex min-h-screen bg-[#F9F7F3]">
-
       {/* Bouton menu mobile */}
       {isMobile && !mobileOpen && (
         <button
@@ -61,29 +68,24 @@ export default function AdminSidebar({ children }) {
         </button>
       )}
 
-      {/* ================= SIDEBAR ================= */}
+      {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 h-screen z-40
-          bg-white
-          shadow-xl
-          transition-all duration-300
-          flex flex-col
+          fixed top-0 left-0 h-screen z-40 bg-white shadow-xl
+          flex flex-col transition-all duration-300
           ${isMobile ? (mobileOpen ? "translate-x-0" : "-translate-x-full") : ""}
           ${!isMobile && (open ? "w-72" : "w-20")}
         `}
       >
         {/* Header */}
-        <div className={`
-          p-4 md:p-6 border-b border-gray-100
-          ${!open && !isMobile ? "flex justify-center" : "flex items-center justify-between"}
-        `}>
+        <div
+          className={`p-4 md:p-6 border-b border-gray-100 ${
+            !open && !isMobile ? "flex justify-center" : "flex items-center justify-between"
+          }`}
+        >
           {open || isMobile ? (
             <>
-              <h2 className="text-xl font-bold text-[#0B3D2E]">
-                Admin
-              </h2>
-              
+              <h2 className="text-xl font-bold text-[#0B3D2E]">Admin</h2>
               <button
                 onClick={toggleSidebar}
                 className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300 text-gray-600"
@@ -92,15 +94,12 @@ export default function AdminSidebar({ children }) {
               </button>
             </>
           ) : (
-            // icone without texte 
-            <div className="flex flex-col items-center gap-4">
-              <button
-                onClick={toggleSidebar}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300 text-gray-600"
-              >
-                <FiMenu size={22} />
-              </button>
-            </div>
+            <button
+              onClick={toggleSidebar}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300 text-gray-600"
+            >
+              <FiMenu size={22} />
+            </button>
           )}
         </div>
 
@@ -111,10 +110,9 @@ export default function AdminSidebar({ children }) {
               to="/admin/dashboard"
               onClick={handleCloseOnMobile}
               className={({ isActive }) =>
-                `${baseLink}
-                ${isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""}
-                ${!open && !isMobile ? "justify-center" : ""}
-                transition-all duration-300`
+                `${baseLink} ${
+                  isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
+                } ${!open && !isMobile ? "justify-center" : ""}`
               }
             >
               <FiHome size={20} />
@@ -125,10 +123,9 @@ export default function AdminSidebar({ children }) {
               to="/admin/eventList"
               onClick={handleCloseOnMobile}
               className={({ isActive }) =>
-                `${baseLink}
-                ${isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""}
-                ${!open && !isMobile ? "justify-center" : ""}
-                transition-all duration-300`
+                `${baseLink} ${
+                  isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
+                } ${!open && !isMobile ? "justify-center" : ""}`
               }
             >
               <FiCalendar size={20} />
@@ -139,10 +136,9 @@ export default function AdminSidebar({ children }) {
               to="/admin/addEvent"
               onClick={handleCloseOnMobile}
               className={({ isActive }) =>
-                `${baseLink}
-                ${isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""}
-                ${!open && !isMobile ? "justify-center" : ""}
-                transition-all duration-300`
+                `${baseLink} ${
+                  isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
+                } ${!open && !isMobile ? "justify-center" : ""}`
               }
             >
               <FiPlusSquare size={20} />
@@ -153,10 +149,9 @@ export default function AdminSidebar({ children }) {
               to="/admin/orders"
               onClick={handleCloseOnMobile}
               className={({ isActive }) =>
-                `${baseLink}
-                ${isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""}
-                ${!open && !isMobile ? "justify-center" : ""}
-                transition-all duration-300`
+                `${baseLink} ${
+                  isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
+                } ${!open && !isMobile ? "justify-center" : ""}`
               }
             >
               <FiShoppingCart size={20} />
@@ -167,14 +162,13 @@ export default function AdminSidebar({ children }) {
           {/* Logout */}
           <div className="px-4 pt-6 border-t border-gray-100">
             <button
-              onClick={handleCloseOnMobile}
+              onClick={handleLogout}
               className={`
                 flex items-center gap-3 px-4 py-3 rounded-lg
                 bg-gradient-to-r from-[#8B1E1E] to-[#c42e2e]
                 hover:from-[#C6A75E] hover:to-[#d4b776]
                 text-white hover:text-[#121212]
-                transition-all duration-300
-                shadow-md hover:shadow-lg
+                transition-all duration-300 shadow-md hover:shadow-lg
                 ${!open && !isMobile ? "justify-center" : ""}
                 w-full
               `}
@@ -186,7 +180,7 @@ export default function AdminSidebar({ children }) {
         </div>
       </aside>
 
-      {/* Overlay pour mobile */}
+      {/* Overlay mobile */}
       {isMobile && mobileOpen && (
         <div
           className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30"
@@ -194,14 +188,11 @@ export default function AdminSidebar({ children }) {
         />
       )}
 
-      {/* ================= MAIN ================= */}
+      {/* Main content */}
       <main
-        className={`
-          flex-1 transition-all duration-300
-          ${!isMobile && (open ? "ml-72" : "ml-20")}
-          ${isMobile ? "w-full" : ""}
-          min-h-screen
-        `}
+        className={`flex-1 transition-all duration-300 ${!isMobile && (open ? "ml-72" : "ml-20")} ${
+          isMobile ? "w-full" : ""
+        } min-h-screen`}
       >
         {children}
       </main>
