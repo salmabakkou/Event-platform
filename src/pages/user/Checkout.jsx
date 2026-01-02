@@ -20,7 +20,8 @@ import { clearCart } from "../../redux/slices/cartSlice";
 import { placeOrder } from "../../api/orders.api";
 
 export default function Checkout() {
-  const { items, totalPrice } = useSelector((state) => state.cart);
+  // AJOUT: Récupère totalQuantity depuis Redux
+  const { items, totalPrice, totalQuantity } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -134,10 +135,11 @@ export default function Checkout() {
             <span className="font-medium">Back to Cart</span>
           </button>
 
+          {/* CORRECTION: Utilise totalQuantity au lieu de items.length */}
           <div className="flex items-center gap-2 bg-gradient-to-r from-[#0b3d2e] to-[#0a3528] px-4 py-2 rounded-lg shadow-md">
             <Ticket size={18} className="text-white" />
             <span className="font-bold text-white">
-              {items.length} {items.length === 1 ? "Ticket" : "Tickets"}
+              {totalQuantity} {totalQuantity === 1 ? "Ticket" : "Tickets"}
             </span>
           </div>
         </div>
