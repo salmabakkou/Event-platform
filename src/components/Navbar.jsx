@@ -36,7 +36,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#0B3D2E] to-[#1a6b52] rounded-xl flex items-center justify-center shadow-md">
+            <div className="w-10 h-10 bg-linear-to-br from-[#0B3D2E] to-[#1a6b52] rounded-xl flex items-center justify-center shadow-md">
               <span className="text-white font-bold text-lg">E</span>
             </div>
             <span className="text-xl font-bold text-[#121212] hidden sm:block">
@@ -52,7 +52,7 @@ export default function Navbar() {
                 to={item.path}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                   isActive(item.path)
-                    ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md"
+                    ? "bg-linear-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md"
                     : "text-gray-700 hover:bg-[#0B3D2E]/10 hover:text-[#0B3D2E]"
                 }`}
               >

@@ -27,6 +27,7 @@ export default function Checkout() {
 
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -35,17 +36,53 @@ export default function Checkout() {
     address: "",
   });
 
+  const validateForm = () => {
+    const errors = {};
+
+    // Vérification des champs vides
+    if (!formData.fullName.trim()) errors.fullName = "Full name is required";
+    if (!formData.email.trim()) errors.email = "Email is required";
+    if (!formData.phone.trim()) errors.phone = "Phone number is required";
+    if (!formData.address.trim()) errors.address = "Address is required";
+
+    // Vérification de l'email
+    if (formData.email && !formData.email.includes("@")) {
+      errors.email = "Email must contain @";
+    }
+
+    // Vérification du téléphone (optionnel)
+    if (formData.phone && formData.phone.length < 8) {
+      errors.phone = "Please enter a valid phone number";
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleChange = (field, value) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
+    // Effacer l'erreur du champ modifié
+    if (validationErrors[field]) {
+      setValidationErrors({
+        ...validationErrors,
+        [field]: "",
+      });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validation manuelle
-    const { fullName, email, phone, address } = formData;
-    if (!fullName.trim() || !email.trim() || !phone.trim() || !address.trim()) {
-      alert("Please fill in all required fields.");
+    // Validation avant envoi
+    if (!validateForm()) {
       return;
     }
     
     setLoading(true);
+    setValidationErrors({});
 
     const orderData = {
       customer: formData,
@@ -91,7 +128,7 @@ export default function Checkout() {
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="w-32 h-32 bg-gradient-to-br from-[#0b3d2e] to-[#0a3528] rounded-full flex items-center justify-center mb-8"
+          className="w-32 h-32 bg-linear-to-br from-[#0b3d2e] to-[#0a3528] rounded-full flex items-center justify-center mb-8"
         >
           <CheckCircle size={70} className="text-white" />
         </motion.div>
@@ -136,7 +173,7 @@ export default function Checkout() {
           </button>
 
           {/* CORRECTION: Utilise totalQuantity au lieu de items.length */}
-          <div className="flex items-center gap-2 bg-gradient-to-r from-[#0b3d2e] to-[#0a3528] px-4 py-2 rounded-lg shadow-md">
+          <div className="flex items-center gap-2 bg-linear-to-r from-[#0b3d2e] to-[#0a3528] px-4 py-2 rounded-lg shadow-md">
             <Ticket size={18} className="text-white" />
             <span className="font-bold text-white">
               {totalQuantity} {totalQuantity === 1 ? "Ticket" : "Tickets"}
@@ -153,7 +190,7 @@ export default function Checkout() {
           >
             <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#8b1e1e] to-[#7a1a1a] flex items-center justify-center shadow-md">
+                <div className="w-12 h-12 rounded-lg bg-linear-to-br from-[#8b1e1e] to-[#7a1a1a] flex items-center justify-center shadow-md">
                   <User className="text-white" size={24} />
                 </div>
                 <div>
@@ -177,14 +214,14 @@ export default function Checkout() {
                       <input
                         type="text"
                         placeholder="Your full name"
-                        required
-                        className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8b1e1e] focus:border-[#8b1e1e] outline-none transition-all"
+                        className={`w-full pl-12 pr-4 py-3 border ${validationErrors.fullName ? "border-red-300" : "border-gray-300"} rounded-lg focus:ring-2 focus:ring-[#8b1e1e] focus:border-[#8b1e1e] outline-none transition-all`}
                         value={formData.fullName}
-                        onChange={(e) =>
-                          setFormData({ ...formData, fullName: e.target.value })
-                        }
+                        onChange={(e) => handleChange("fullName", e.target.value)}
                       />
                     </div>
+                    {validationErrors.fullName && (
+                      <p className="text-red-600 text-sm mt-1">{validationErrors.fullName}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -196,14 +233,14 @@ export default function Checkout() {
                       <input
                         type="tel"
                         placeholder="+212 XXX XXX XXX"
-                        required
-                        className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8b1e1e] focus:border-[#8b1e1e] outline-none transition-all"
+                        className={`w-full pl-12 pr-4 py-3 border ${validationErrors.phone ? "border-red-300" : "border-gray-300"} rounded-lg focus:ring-2 focus:ring-[#8b1e1e] focus:border-[#8b1e1e] outline-none transition-all`}
                         value={formData.phone}
-                        onChange={(e) =>
-                          setFormData({ ...formData, phone: e.target.value })
-                        }
+                        onChange={(e) => handleChange("phone", e.target.value)}
                       />
                     </div>
+                    {validationErrors.phone && (
+                      <p className="text-red-600 text-sm mt-1">{validationErrors.phone}</p>
+                    )}
                   </div>
                 </div>
 
@@ -214,16 +251,16 @@ export default function Checkout() {
                   <div className="relative">
                     <Mail className="absolute left-4 top-4 text-gray-400" size={18} />
                     <input
-                      type="email"
+                      type="text"
                       placeholder="email@example.com"
-                      required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8b1e1e] focus:border-[#8b1e1e] outline-none transition-all"
+                      className={`w-full pl-12 pr-4 py-3 border ${validationErrors.email ? "border-red-300" : "border-gray-300"} rounded-lg focus:ring-2 focus:ring-[#8b1e1e] focus:border-[#8b1e1e] outline-none transition-all`}
                       value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
+                      onChange={(e) => handleChange("email", e.target.value)}
                     />
                   </div>
+                  {validationErrors.email && (
+                    <p className="text-red-600 text-sm mt-1">{validationErrors.email}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -234,20 +271,20 @@ export default function Checkout() {
                     <MapPin className="absolute left-4 top-4 text-gray-400" size={18} />
                     <textarea
                       placeholder="Complete address for ticket delivery"
-                      required
-                      className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8b1e1e] focus:border-[#8b1e1e] outline-none h-40 resize-none transition-all"
+                      className={`w-full pl-12 pr-4 py-3 border ${validationErrors.address ? "border-red-300" : "border-gray-300"} rounded-lg focus:ring-2 focus:ring-[#8b1e1e] focus:border-[#8b1e1e] outline-none h-40 resize-none transition-all`}
                       value={formData.address}
-                      onChange={(e) =>
-                        setFormData({ ...formData, address: e.target.value })
-                      }
+                      onChange={(e) => handleChange("address", e.target.value)}
                     />
                   </div>
+                  {validationErrors.address && (
+                    <p className="text-red-600 text-sm mt-1">{validationErrors.address}</p>
+                  )}
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading || items.length === 0}
-                  className="w-full py-4 bg-gradient-to-r from-[#8b1e1e] to-[#7a1a1a] text-white font-bold text-lg rounded-lg hover:opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-md"
+                  className="w-full py-4 bg-linear-to-r from-[#8b1e1e] to-[#7a1a1a] text-white font-bold text-lg rounded-lg hover:opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-md"
                 >
                   {loading ? (
                     <Loader2 className="animate-spin" size={24} />
@@ -268,7 +305,7 @@ export default function Checkout() {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-8"
           >
-            <div className="bg-gradient-to-br from-[#0b3d2e] to-[#0a3528] text-white rounded-xl p-8 shadow-xl">
+            <div className="bg-linear-to-br from-[#0b3d2e] to-[#0a3528] text-white rounded-xl p-8 shadow-xl">
               <h2 className="text-2xl font-bold mb-8">Order Summary</h2>
 
               <div className="space-y-4 mb-8 max-h-96 overflow-y-auto pr-2">
@@ -322,11 +359,11 @@ export default function Checkout() {
 
             {/* Section de garanties */}
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                 <Check size={20} className="text-[#0b3d2e]" />
                 Order Confirmation
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-3 mt-4">
                 <li className="flex items-center gap-3 text-sm text-gray-600">
                   <div className="w-6 h-6 rounded-full bg-[#0b3d2e]/10 flex items-center justify-center">
                     <CheckCircle size={14} className="text-[#0b3d2e]" />

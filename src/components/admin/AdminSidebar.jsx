@@ -111,7 +111,7 @@ export default function AdminSidebar({ children }) {
               onClick={handleCloseOnMobile}
               className={({ isActive }) =>
                 `${baseLink} ${
-                  isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
+                  isActive ? "bg-linear-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
                 } ${!open && !isMobile ? "justify-center" : ""}`
               }
             >
@@ -124,7 +124,7 @@ export default function AdminSidebar({ children }) {
               onClick={handleCloseOnMobile}
               className={({ isActive }) =>
                 `${baseLink} ${
-                  isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
+                  isActive ? "bg-linear-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
                 } ${!open && !isMobile ? "justify-center" : ""}`
               }
             >
@@ -137,7 +137,7 @@ export default function AdminSidebar({ children }) {
               onClick={handleCloseOnMobile}
               className={({ isActive }) =>
                 `${baseLink} ${
-                  isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
+                  isActive ? "bg-linear-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
                 } ${!open && !isMobile ? "justify-center" : ""}`
               }
             >
@@ -150,7 +150,7 @@ export default function AdminSidebar({ children }) {
               onClick={handleCloseOnMobile}
               className={({ isActive }) =>
                 `${baseLink} ${
-                  isActive ? "bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
+                  isActive ? "bg-linear-to-r from-[#0B3D2E] to-[#1a6b52] text-white shadow-md" : ""
                 } ${!open && !isMobile ? "justify-center" : ""}`
               }
             >
@@ -165,7 +165,7 @@ export default function AdminSidebar({ children }) {
               onClick={handleLogout}
               className={`
                 flex items-center gap-3 px-4 py-3 rounded-lg
-                bg-gradient-to-r from-[#8B1E1E] to-[#c42e2e]
+                bg-linear-to-r from-[#8B1E1E] to-[#c42e2e]
                 hover:from-[#C6A75E] hover:to-[#d4b776]
                 text-white hover:text-[#121212]
                 transition-all duration-300 shadow-md hover:shadow-lg

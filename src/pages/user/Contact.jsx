@@ -14,18 +14,50 @@ export default function Contact() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
+
+  const validateForm = () => {
+    const errors = {};
+
+    // Vérification des champs vides
+    if (!formData.name.trim()) errors.name = "Name is required";
+    if (!formData.email.trim()) errors.email = "Email is required";
+    if (!formData.message.trim()) errors.message = "Message is required";
+
+    // Vérification de l'email
+    if (formData.email && !formData.email.includes("@")) {
+      errors.email = "Email must contain @";
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+    // Effacer l'erreur du champ modifié
+    if (validationErrors[e.target.name]) {
+      setValidationErrors({
+        ...validationErrors,
+        [e.target.name]: "",
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validation avant envoi
+    if (!validateForm()) {
+      return;
+    }
+
     setLoading(true);
     setError(false);
+    setValidationErrors({});
 
     try {
       await axios.post(N8NCONTACT, formData);
@@ -43,11 +75,11 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F7F3] py-16">
+    <div className="min-h-screen bg-gray-50 py-16">
       <main className="container mx-auto px-4 max-w-2xl">
         {/* En-tête */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#C6A75E] to-[#d4b776] rounded-full mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-r from-[#C6A75E] to-[#d4b776] rounded-full mb-4">
             <Mail className="text-white" size={28} />
           </div>
           
@@ -77,12 +109,15 @@ export default function Contact() {
               <input
                 type="text"
                 name="name"
-                required
+                // RETIRÉ: required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#0B3D2E]/20 focus:border-[#0B3D2E] transition-colors"
+                className={`w-full border ${validationErrors.name ? "border-red-300" : "border-gray-300"} rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#0B3D2E]/20 focus:border-[#0B3D2E] transition-colors`}
                 placeholder="Your full name"
               />
+              {validationErrors.name && (
+                <p className="text-red-600 text-sm mt-1">{validationErrors.name}</p>
+              )}
             </div>
 
             {/* Champ Email */}
@@ -94,14 +129,17 @@ export default function Contact() {
                 </div>
               </label>
               <input
-                type="email"
+                type="text" // Changé de "email" à "text" pour éviter la validation native
                 name="email"
-                required
+                // RETIRÉ: required
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#0B3D2E]/20 focus:border-[#0B3D2E] transition-colors"
+                className={`w-full border ${validationErrors.email ? "border-red-300" : "border-gray-300"} rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#0B3D2E]/20 focus:border-[#0B3D2E] transition-colors`}
                 placeholder="your.email@example.com"
               />
+              {validationErrors.email && (
+                <p className="text-red-600 text-sm mt-1">{validationErrors.email}</p>
+              )}
             </div>
 
             {/* Champ Message */}
@@ -114,20 +152,23 @@ export default function Contact() {
               </label>
               <textarea
                 name="message"
-                required
+                // RETIRÉ: required
                 value={formData.message}
                 onChange={handleChange}
                 rows="6"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#0B3D2E]/20 focus:border-[#0B3D2E] transition-colors resize-none"
+                className={`w-full border ${validationErrors.message ? "border-red-300" : "border-gray-300"} rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#0B3D2E]/20 focus:border-[#0B3D2E] transition-colors resize-none`}
                 placeholder="Tell us how we can help you..."
               />
+              {validationErrors.message && (
+                <p className="text-red-600 text-sm mt-1">{validationErrors.message}</p>
+              )}
             </div>
 
             {/* Bouton Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-[#0B3D2E] to-[#1a6b52] hover:from-[#1a6b52] hover:to-[#0B3D2E] text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-linear-to-r from-[#0B3D2E] to-[#1a6b52] hover:from-[#1a6b52] hover:to-[#0B3D2E] text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>

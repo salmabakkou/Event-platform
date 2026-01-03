@@ -38,10 +38,10 @@ export default function CartSidebar() {
             animate={{ x: 0 }} 
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed top-0 right-0 h-full w-full pb-4  my-16 sm:w-[400px] bg-white z-50 shadow-xl flex flex-col"
+            className="fixed top-0 right-0 h-full w-full pb-4  my-16 sm:w-100 bg-white z-50 shadow-xl flex flex-col"
           >
             {/* Header */}
-            <div className="px-6   py-5 border-b border-gray-100 bg-gradient-to-r from-[#0b3d2e] to-[#0a3528]">
+            <div className="px-6   py-5 border-b border-gray-100 bg-linear-to-r from-[#0b3d2e] to-[#0a3528]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
@@ -98,7 +98,7 @@ export default function CartSidebar() {
                 {/* Checkout Button */}
                 <button 
                   onClick={goToCheckout}
-                  className="w-full py-4 bg-gradient-to-r from-[#8b1e1e] to-[#7a1a1a] text-white font-bold text-lg rounded-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-3 mb-4 shadow-md"
+                  className="w-full py-4 bg-linear-to-r from-[#8b1e1e] to-[#7a1a1a] text-white font-bold text-lg rounded-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-3 mb-4 shadow-md"
                 >
                   <CreditCard size={20} />
                   Checkout Now

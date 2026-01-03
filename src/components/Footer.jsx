@@ -13,7 +13,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-b from-[#0B3D2E] to-[#083024] text-white pt-12 pb-8">
+    <footer className="bg-linear-to-b from-[#0B3D2E] to-[#083024] text-white pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Section */}
@@ -82,18 +82,18 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-6 pb-2 border-b border-white/20">Contact Info</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="text-[#C6A75E] mt-1 flex-shrink-0" size={18} />
+                <MapPin className="text-[#C6A75E] mt-1 shrink-0" size={18} />
                 <span className="text-gray-300 text-sm">
                   123 Event Street, City Center<br />
                   Casablanca, Morocco
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="text-[#C6A75E] flex-shrink-0" size={18} />
+                <Phone className="text-[#C6A75E] shrink-0" size={18} />
                 <span className="text-gray-300 text-sm">+212 6 XX XX XX XX</span>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="text-[#C6A75E] flex-shrink-0" size={18} />
+                <Mail className="text-[#C6A75E] shrink-0" size={18} />
                 <span className="text-gray-300 text-sm">contact@eventsphere.com</span>
               </li>
             </ul>
@@ -113,7 +113,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-[#C6A75E] to-[#d4b776] hover:from-[#d4b776] hover:to-[#C6A75E] text-[#121212] font-semibold py-3 rounded-lg transition-all duration-200 hover:shadow-lg"
+                className="w-full bg-linear-to-r from-[#C6A75E] to-[#d4b776] hover:from-[#d4b776] hover:to-[#C6A75E] text-[#121212] font-semibold py-3 rounded-lg transition-all duration-200 hover:shadow-lg"
               >
                 Subscribe
               </button>

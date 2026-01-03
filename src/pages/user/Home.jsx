@@ -37,7 +37,7 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F9F7F3] flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 not-only-of-type:flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-[#8B1E1E] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Loading events...</p>
@@ -48,14 +48,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#F9F7F3]">
-      {/* HERO SECTION - AJOUT DE MARGIN-TOP POUR CACHER LE HAUT SUR MOBILE */}
-      <div className="relative min-h-[500px] flex items-center mt-16 md:mt-0">
-        {/* VOTRE PHOTO DE FOND */}
+      {/* HERO SECTION - AVEC ZOOM SUR MOBILE */}
+      <div className="relative min-h-125 flex items-center overflow-hidden">
+        {/* VOTRE PHOTO DE FOND - ZOOMÉE SUR MOBILE */}
         <div 
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-300 md:scale-100 scale-170"
           style={{ backgroundImage: "url('/heroSection.png')" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-black/70 to-black/50"></div>
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">

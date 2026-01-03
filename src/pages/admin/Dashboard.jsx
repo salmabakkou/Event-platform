@@ -192,7 +192,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link 
               to="/admin/addEvent"
-              className="bg-gradient-to-r from-[#0B3D2E] to-[#1a5c48] text-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow"
+              className="bg-linear-to-r from-[#0B3D2E] to-[#1a5c48] text-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="p-2 bg-white/20 rounded-lg">

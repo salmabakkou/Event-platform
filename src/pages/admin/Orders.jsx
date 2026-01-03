@@ -234,7 +234,7 @@ export default function Orders() {
                             </div>
                             <div className="flex items-center gap-2">
                               <Mail size={14} className="text-gray-400" />
-                              <span className="truncate max-w-[200px]">
+                              <span className="truncate max-w-50">
                                 {order.customer?.email || 'N/A'}
                               </span>
                             </div>
