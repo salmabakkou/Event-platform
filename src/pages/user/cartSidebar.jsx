@@ -38,10 +38,10 @@ export default function CartSidebar() {
             animate={{ x: 0 }} 
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-50 shadow-xl flex flex-col"
+            className="fixed top-0 right-0 h-full w-full pb-4  my-16 sm:w-[400px] bg-white z-50 shadow-xl flex flex-col"
           >
             {/* Header */}
-            <div className="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-[#0b3d2e] to-[#0a3528]">
+            <div className="px-6   py-5 border-b border-gray-100 bg-gradient-to-r from-[#0b3d2e] to-[#0a3528]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">

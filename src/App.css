@@ -1,1 +1,28 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* Couleurs luxe */
+.gold-400 {
+  color: #FFD700;
+}
+.gold-500 {
+  color: #FFC107;
+}
+.gold-600 {
+  color: #FFA000;
+}
+
+.bg-gold-400 {
+  background-color: #FFD700;
+}
+.bg-gold-500 {
+  background-color: #FFC107;
+}
+
+.border-gold-500 {
+  border-color: #FFC107;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}

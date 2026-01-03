@@ -138,7 +138,7 @@ export default function EventList() {
   };
 
   if (loading) return (
-    <div className="min-h-screen bg-[#F9F7F3] flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50  flex items-center justify-center">
       <div className="text-center">
         <div className="w-12 h-12 border-4 border-[#8B1E1E] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
         <p className="text-gray-600">Loading events...</p>
@@ -147,7 +147,7 @@ export default function EventList() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F9F7F3] p-4 sm:p-8">
+    <div className="min-h-screen bg-gray-50  p-4 sm:p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-8 text-[#121212]">Manage Events</h1>
 
@@ -164,7 +164,7 @@ export default function EventList() {
             />
           </div>
 
-          <div className="relative min-w-[200px]">
+          <div className="relative min-w-50">
             <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <select
               value={selectedCategory}
@@ -196,7 +196,7 @@ export default function EventList() {
             )}
           </div>
         ) : (
-          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
             <AnimatePresence>
               {filteredEvents.map((event) => (
                 <motion.div
@@ -255,7 +255,7 @@ export default function EventList() {
                   </button>
                   <button
                     onClick={confirmDelete}
-                    className="flex-1 px-4 py-3 bg-gradient-to-r from-[#8B1E1E] to-[#c42e2e] text-white font-semibold rounded-lg hover:from-[#c42e2e] hover:to-[#d9534f] transition-all duration-200 shadow-md hover:shadow-lg"
+                    className="flex-1 px-4 py-3 bg-linear-to-r from-[#8B1E1E] to-[#c42e2e] text-white font-semibold rounded-lg hover:from-[#c42e2e] hover:to-[#d9534f] transition-all duration-200 shadow-md hover:shadow-lg"
                   >
                     Delete Event
                   </button>
@@ -324,40 +324,40 @@ export default function EventList() {
                         </div>
                       </div>
 
-{/* Date & Time */}
-<div className="space-y-1">
-  <label className="block text-xs font-medium text-gray-700">
-    Date & Time *
-  </label>
-  <div className="relative">
-    <button
-      type="button"
-      onClick={openDatePicker}
-      className={`absolute left-3 top-1/2 transform -translate-y-1/2 z-10 transition-colors ${
-        focused === "date" ? "text-[#8B1E1E]" : "text-gray-400"
-      } hover:text-[#8B1E1E]`}
-    >
-      <CalendarDays size={14} />
-    </button>
-    <input
-      ref={dateRef}
-      type="datetime-local"
-      name="date"
-      value={editEvent.date}
-      onChange={handleEditChange}
-      onFocus={() => setFocused("date")}
-      onBlur={() => setFocused("")}
-      className={`w-full pl-9 pr-3 py-2 text-sm border rounded-lg transition-all outline-none cursor-pointer 
-        ${focused === "date" 
-          ? "border-[#8B1E1E] ring-1 ring-[#8B1E1E]/20" 
-          : "border-gray-300 focus:border-[#8B1E1E] focus:ring-1 focus:ring-[#8B1E1E]/20"
-        } 
-        /* Cette ligne supprime l'icône à droite */
-        [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden
-      `}
-    />
-  </div>
-</div>
+                    {/* Date & Time */}
+                    <div className="space-y-1">
+                      <label className="block text-xs font-medium text-gray-700">
+                        Date & Time *
+                      </label>
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={openDatePicker}
+                          className={`absolute left-3 top-1/2 transform -translate-y-1/2 z-10 transition-colors ${
+                            focused === "date" ? "text-[#8B1E1E]" : "text-gray-400"
+                          } hover:text-[#8B1E1E]`}
+                        >
+                          <CalendarDays size={14} />
+                        </button>
+                        <input
+                          ref={dateRef}
+                          type="datetime-local"
+                          name="date"
+                          value={editEvent.date}
+                          onChange={handleEditChange}
+                          onFocus={() => setFocused("date")}
+                          onBlur={() => setFocused("")}
+                          className={`w-full pl-9 pr-3 py-2 text-sm border rounded-lg transition-all outline-none cursor-pointer 
+                            ${focused === "date" 
+                              ? "border-[#8B1E1E] ring-1 ring-[#8B1E1E]/20" 
+                              : "border-gray-300 focus:border-[#8B1E1E] focus:ring-1 focus:ring-[#8B1E1E]/20"
+                            } 
+                            /* Cette ligne supprime l'icône à droite */
+                            [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden
+                          `}
+                        />
+                      </div>
+                    </div>
 
                     </div>
 
@@ -540,7 +540,7 @@ export default function EventList() {
                         <button
                           type="submit"
                           disabled={loadingEdit}
-                          className="flex-1 px-4 py-2.5 bg-gradient-to-r from-[#8B1E1E] to-[#c42e2e] hover:from-[#C6A75E] hover:to-[#d4b776] hover:text-[#121212] text-white font-semibold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-sm hover:shadow"
+                          className="flex-1 px-4 py-2.5 bg-linear-to-r from-[#8B1E1E] to-[#c42e2e] hover:from-[#C6A75E] hover:to-[#d4b776] hover:text-[#121212] text-white font-semibold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-sm hover:shadow"
                         >
                           {loadingEdit ? (
                             <span className="flex items-center justify-center gap-2">

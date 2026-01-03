@@ -39,7 +39,7 @@ export default function Events() {
   });
 
   if (loading) return (
-    <div className="min-h-screen bg-[#F9F7F3] flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="text-center">
         <div className="w-12 h-12 border-4 border-[#8B1E1E] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
         <p className="text-gray-600">Loading events...</p>
@@ -48,7 +48,7 @@ export default function Events() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F9F7F3] p-4 sm:p-8">
+    <div className="min-h-screen bg-gray-50  p-4 sm:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8 text-center">
@@ -79,7 +79,7 @@ export default function Events() {
             />
           </div>
 
-          <div className="relative min-w-[200px]">
+          <div className="relative min-w-50">
             <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <select
               value={selectedCategory}

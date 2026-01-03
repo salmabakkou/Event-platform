@@ -74,7 +74,7 @@ export default function AddEvent() {
   };
 
   return (
-    <div className="bg-[#F9F7F3] min-h-screen flex flex-col">
+    <div className="bg-gray-50  min-h-screen flex flex-col">
       <div className="flex-1 flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-2xl">
           
@@ -277,7 +277,7 @@ export default function AddEvent() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-[#8B1E1E] to-[#c42e2e] hover:from-[#C6A75E] hover:to-[#d4b776] hover:text-[#121212] text-white py-3 rounded-lg font-bold shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-linear-to-r from-[#8B1E1E] to-[#c42e2e] hover:from-[#C6A75E] hover:to-[#d4b776] hover:text-[#121212] text-white py-3 rounded-lg font-bold shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
