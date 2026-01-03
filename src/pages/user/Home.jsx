@@ -48,8 +48,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#F9F7F3]">
-      {/* HERO SECTION - VOTRE PHOTO */}
-      <div className="relative min-h-[500px] flex items-center">
+      {/* HERO SECTION - AJOUT DE MARGIN-TOP POUR CACHER LE HAUT SUR MOBILE */}
+      <div className="relative min-h-[500px] flex items-center mt-16 md:mt-0">
         {/* VOTRE PHOTO DE FOND */}
         <div 
           className="absolute inset-0 bg-cover bg-center"

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
+import Navbar from "../components/Navbar"
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,8 @@ export default function Login() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-[#F9F7F3] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         
@@ -89,5 +92,6 @@ export default function Login() {
 
       </div>
     </div>
+    </>
   );
 }
